@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on iamtgray</title>
+    <link>https://iamtgray.com/posts/</link>
+    <description>Recent content in Posts on iamtgray</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 28 May 2020 09:41:18 +0100</lastBuildDate>
+    
+	<atom:link href="https://iamtgray.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Sa Associate Notes</title>
+      <link>https://iamtgray.com/posts/sa-associate-notes/</link>
+      <pubDate>Thu, 28 May 2020 09:41:18 +0100</pubDate>
+      
+      <guid>https://iamtgray.com/posts/sa-associate-notes/</guid>
+      <description>As part of my new role @ AWS, I (unsurprisingly) need to get a bit more certified on paper than a simple &amp;ldquo;Don&amp;rsquo;t worry mate, I&amp;rsquo;ve been doing this for years.</description>
+    </item>
+    
+    <item>
+      <title>Job Move</title>
+      <link>https://iamtgray.com/posts/job-move/</link>
+      <pubDate>Thu, 28 May 2020 08:54:14 +0100</pubDate>
+      
+      <guid>https://iamtgray.com/posts/job-move/</guid>
+      <description>Having spent 4 months deciding that I wanted to leave, and a further 4 months applying for a job with AWS, Friday the 5th of June marks my last day as a principal consultant at InfinityWorks, the end of a four year journey in which I have learned more than I thought possible.</description>
+    </item>
+    
+  </channel>
+</rss>
