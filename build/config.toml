@@ -1,4 +1,4 @@
-baseURL = "https://iamtgray.com"
+baseURL = "https://iamtgray.com/"
 title = "iamtgray"
 languageCode = "en"
 enableInlineShortcodes = true
