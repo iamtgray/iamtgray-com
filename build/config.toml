@@ -9,6 +9,25 @@ summarylength = 10
 enableEmoji = true
 
 [params]
+dateform        = "2 Jan, 2006"
+dateformShort   = "2 Jan"
+dateformNum     = "01-02-2006"
+dateformNumTime = "01-02-2006 15:04"
+
+# Subtitle for home
+homeSubtitle = "The blog of TOm Gray"
+
+# Set disableReadOtherPosts to true in order to hide the links to other posts.
+disableReadOtherPosts = false
+
+# Enable sharing buttons, if you like
+enableSharingButtons = true
+
+# Metadata mostly used in document's head
+description = "Thomas Gray (architect at AWS) personal blog"
+keywords = "homepage, blog"
+images = [""]
+
 author = "Thomas Gray"
 description = "My Personal Blog"
 
