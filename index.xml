@@ -6,11 +6,7 @@
     <description>Recent content on iamtgray</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 28 May 2020 09:41:18 +0100</lastBuildDate>
-    
-	<atom:link href="https://iamtgray.com/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Thu, 28 May 2020 09:41:18 +0100</lastBuildDate><atom:link href="https://iamtgray.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>About me</title>
       <link>https://iamtgray.com/about/</link>
@@ -27,7 +23,7 @@ Dad &amp;amp; architect at Amazon Web Services (AWS), previsouly principal consu
       <pubDate>Thu, 28 May 2020 09:41:18 +0100</pubDate>
       
       <guid>https://iamtgray.com/posts/sa-associate-notes/</guid>
-      <description>As part of my new role @ AWS, I (unsurprisingly) need to get a bit more certified on paper than a simple &amp;ldquo;Don&amp;rsquo;t worry mate, I&amp;rsquo;ve been doing this for years.</description>
+      <description>Update as of March 2022 - I have now achieved AWS SA Associate, AWS SA Professional and AWS Security Speciality certifications.</description>
     </item>
     
     <item>

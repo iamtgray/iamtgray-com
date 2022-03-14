@@ -5,10 +5,6 @@
     <link>https://iamtgray.com/categories/</link>
     <description>Recent content in Categories on iamtgray</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    
-	<atom:link href="https://iamtgray.com/categories/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>en</language><atom:link href="https://iamtgray.com/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
