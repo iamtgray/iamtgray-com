@@ -1,38 +1,104 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Posts on iamtgray</title>
-    <link>https://iamtgray.com/posts/</link>
-    <description>Recent content in Posts on iamtgray</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <lastBuildDate>Mon, 14 Mar 2022 08:54:14 +0100</lastBuildDate><atom:link href="https://iamtgray.com/posts/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Securing your CI/CD Pipelines</title>
-      <link>https://iamtgray.com/posts/secure-ci-cd-pipelines/</link>
-      <pubDate>Mon, 14 Mar 2022 08:54:14 +0100</pubDate>
-      
-      <guid>https://iamtgray.com/posts/secure-ci-cd-pipelines/</guid>
-      <description>When speaking to customers about security, I always try to raise the topic of shifting security left.</description>
-    </item>
-    
-    <item>
-      <title>Sa Associate Notes</title>
-      <link>https://iamtgray.com/posts/sa-associate-notes/</link>
-      <pubDate>Thu, 28 May 2020 09:41:18 +0100</pubDate>
-      
-      <guid>https://iamtgray.com/posts/sa-associate-notes/</guid>
-      <description>Update as of March 2022 - I have now achieved AWS SA Associate, AWS SA Professional and AWS Security Speciality certifications.</description>
-    </item>
-    
-    <item>
-      <title>Job Move</title>
-      <link>https://iamtgray.com/posts/job-move/</link>
-      <pubDate>Thu, 28 May 2020 08:54:14 +0100</pubDate>
-      
-      <guid>https://iamtgray.com/posts/job-move/</guid>
-      <description>Having spent 4 months deciding that I wanted to leave, and a further 4 months applying for a job with AWS, Friday the 5th of June marks my last day as a principal consultant at InfinityWorks, the end of a four year journey in which I have learned more than I thought possible.</description>
-    </item>
-    
-  </channel>
+    <channel>
+        <title>Posts on Hello, I am Tom Gray</title>
+        <link>https://iamtgray.com/posts/</link>
+        <description>Recent content in Posts on Hello, I am Tom Gray</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+        <lastBuildDate>Mon, 14 Mar 2022 08:54:14 +0100</lastBuildDate>
+        <atom:link href="https://iamtgray.com/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Securing your CI/CD Pipelines</title>
+            <link>https://iamtgray.com/posts/secure-ci-cd-pipelines/</link>
+            <pubDate>Mon, 14 Mar 2022 08:54:14 +0100</pubDate>
+            
+            <guid>https://iamtgray.com/posts/secure-ci-cd-pipelines/</guid>
+            <description>When speaking to customers about security, I always try to raise the topic of shifting security left.</description>
+            <content type="html"><![CDATA[<p>When speaking to customers about security, I always try to raise the topic of shifting security left.  This relatively moden practice and thinking comes from the dual need to not only (a) de-burden the security team from the low-value tasks of approving individual changes, and (b) allowing the software engineering teams inside the organisation to increase the speed of change, while keeping the security bar high.</p>
+<p>It takes a real shift in mindset for most organisations (and the security teams within them) to start moving security left.  Often customers ask what exactly is meant by &ldquo;shifting left&rdquo; in this context.  To help make the phrase &ldquo;shift left&rdquo; real in a customers mind, I commonly point them to their CI/CD pipeline.</p>
+<p>Take the below example of a common CI/CD pipeline pattern:</p>
+<p><img src="/img/ci-cd-pipelines/pipeline-example.png" alt="Example CI/CD Pipeline"></p>
+<p>Looking at the example given above, normally security would be inserted (manually) just after the &ldquo;Auto Test&rdquo; step.  Security tickets would be cut, and a representative from infosec might review the changes being made to production, they might run a vulnerability scan against the application, and possibly even review some code before approving the release.</p>
+<p>The concept of shifting left literally moves this step leftwards in the pipeline, rather than security teams being involved in the process just before the release to production (and more often than not, stopping the pipeline and causing changes to back-up while they gather an understanding of the scope of change, and the risk to the business) they are instead involved at an earlier stage.</p>
+<p>Often teams do this by bringing a security engineer into the team, so that they can be involved in sprint ceremonies, or other workflow events to &ldquo;ensure the security bar&rdquo; - this can sometimes lead however to changes being slowed sooner rather than later, rather than a speeding up of the overall pipeline (although externally to the business, it may feel faster because there are fewer release pauses).</p>
+<p>A more practical answer to keep the speed high and the quality high, is to automate as much as possible of the work that the security engineer might perform, so that when they are involved they are presented with high quality, accurate information in a timely manner, and they can use their specialist skills and expertise to home-in on the problem faster.  This can be further extended by the use of automated tooling to help the developers in the team get security feedback faster.</p>
+<p>This blog post will focus on this last aspect. The goal of building security practice into the CI/CD system is to ensure that we minimise production change risk in security by ensuring that a minimum security bar is met.  This free&rsquo;s security engineers up to perform more exploritory analysis and add more intrisic value to teams based on their skill sets.</p>
+<h2 id="choosing-your-tooling">Choosing your tooling</h2>
+<p>In the market today, there are hundreds of different peieces of software to help you automate aspects of security for your workload, with that choice available in the market this blog post cannot cover all use cases in all programming langauges being deployed to all environments.</p>
+<p>Instead we have chosen a mixture of open source tools and AWS services that we believe represent a good start for security tooling for a variety of workloads.  As with all decisions in security, you should examine your specific workload and the threat model to your organisation before choosing the tooling you wish to choose, there are enumerate open source and commercial software tools that can assist in this process, and you should therefore choose those that work best for your workload and organisation.</p>
+<h2 id="our-sample-application">Our sample application</h2>
+<p>To deliver a concrete example of these processes, we have chosen the following AWS QuickStart as the basis for our workload, and have built our security tooling around that.</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>Sa Associate Notes</title>
+            <link>https://iamtgray.com/posts/sa-associate-notes/</link>
+            <pubDate>Thu, 28 May 2020 09:41:18 +0100</pubDate>
+            
+            <guid>https://iamtgray.com/posts/sa-associate-notes/</guid>
+            <description>Update as of March 2022 - I have now achieved AWS SA Associate, AWS SA Professional and AWS Security Speciality certifications.</description>
+            <content type="html"><![CDATA[<p>Update as of March 2022 - I have now achieved AWS SA Associate, AWS SA Professional and AWS Security Speciality certifications.
+My experience has so far been that all three associate qualifications combined effectively produce one SA Pro, and the move from SA pro into the specialty certifications is not large, and geenrally involves going only a little deeper.</p>
+<p>The exam with the highest bar (so far) has been the AWS DevOps Pro certification.</p>
+<hr>
+<p>As part of my new role @ AWS, I (unsurprisingly) need to get a bit more certified on paper than a simple &ldquo;Don&rsquo;t worry mate, I&rsquo;ve been doing this for years..&rdquo; so for the first year of my new role, I will have a heavy focus on learning, and part of that will be my certifications.</p>
+<p>The first one I will go for is the AWS SA Associate exam, which by all accouts should be pretty easy - I did a practice exam and passed, so I&rsquo;m pretty confident that all should be well.  Overkill being the underrated thing that it is though, I thought I should do some more formal study for the exam (as i&rsquo;m going to have to start getting used to doing that!).</p>
+<p>As part of that, I watched the 14 hours of acloud.guru preperation talks for the AWS SA associate exam.  There wasn&rsquo;t anything really surprising in there, although AWS HA and AWS S3 were both areas where my knowledge was pretty weak by the looks of it.</p>
+<p>Below are my notes that I wrote out while watching these turorials. Forgive my aweful handwriting.</p>
+<p><img src="/img/sa-associate-notes/Page1.png" alt="Notes Page1">
+<img src="/img/sa-associate-notes/Page2.png" alt="Notes Page2">
+<img src="/img/sa-associate-notes/Page3.png" alt="Notes Page3">
+<img src="/img/sa-associate-notes/Page4.png" alt="Notes Page4">
+<img src="/img/sa-associate-notes/Page5.png" alt="Notes Page5">
+<img src="/img/sa-associate-notes/Page6.png" alt="Notes Page6">
+<img src="/img/sa-associate-notes/Page7.png" alt="Notes Page7">
+<img src="/img/sa-associate-notes/Page8.png" alt="Notes Page8">
+<img src="/img/sa-associate-notes/Page9.png" alt="Notes Page9">
+<img src="/img/sa-associate-notes/Page10.png" alt="Notes Page10">
+<img src="/img/sa-associate-notes/Page11.png" alt="Notes Page11">
+<img src="/img/sa-associate-notes/Page12.png" alt="Notes Page12">
+<img src="/img/sa-associate-notes/Page13.png" alt="Notes Page13">
+<img src="/img/sa-associate-notes/Page14.png" alt="Notes Page14">
+<img src="/img/sa-associate-notes/Page15.png" alt="Notes Page15">
+<img src="/img/sa-associate-notes/Page16.png" alt="Notes Page16">
+<img src="/img/sa-associate-notes/Page17.png" alt="Notes Page17">
+<img src="/img/sa-associate-notes/Page18.png" alt="Notes Page18">
+<img src="/img/sa-associate-notes/Page19.png" alt="Notes Page19">
+<img src="/img/sa-associate-notes/Page20.png" alt="Notes Page20">
+<img src="/img/sa-associate-notes/Page21.png" alt="Notes Page21">
+<img src="/img/sa-associate-notes/Page22.png" alt="Notes Page22">
+<img src="/img/sa-associate-notes/Page23.png" alt="Notes Page23">
+<img src="/img/sa-associate-notes/Page24.png" alt="Notes Page24">
+<img src="/img/sa-associate-notes/Page25.png" alt="Notes Page25">
+<img src="/img/sa-associate-notes/Page26.png" alt="Notes Page26">
+<img src="/img/sa-associate-notes/Page27.png" alt="Notes Page27">
+<img src="/img/sa-associate-notes/Page28.png" alt="Notes Page28"></p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>Job Move</title>
+            <link>https://iamtgray.com/posts/job-move/</link>
+            <pubDate>Thu, 28 May 2020 08:54:14 +0100</pubDate>
+            
+            <guid>https://iamtgray.com/posts/job-move/</guid>
+            <description>Having spent 4 months deciding that I wanted to leave, and a further 4 months applying for a job with AWS, Friday the 5th of June marks my last day as a principal consultant at InfinityWorks, the end of a four year journey in which I have learned more than I thought possible.</description>
+            <content type="html"><![CDATA[<p>Having spent 4 months deciding that I wanted to leave, and a further 4 months applying for a job with AWS, Friday the 5th of June marks my last day as a principal consultant at InfinityWorks, the end of a four year journey in which I have learned more than I thought possible.</p>
+<p>Below is the email I sent to my colleagues in the last few days at InfinityWorks.</p>
+<hr>
+<p>Hey Kids</p>
+<p>It’s the end of the road for me, my last day at Infinity is Friday the 5th of June!  I think Dan B sent an email around last week about this, but I thought I would drop you all a line to say so long, and thanks for all the fish!</p>
+<p>Over the last four years at Infinity, I have learned more than I dreamed possible.  I joined IW as a “PHP Developer” 4 years ago, who had messed with a few servers, done the odd security thing and who firmly believed that Docker was not the way of the future, and that provisioning metal was just ‘better’. Oh wow, what a journey it has been, sometimes stressful - but usually brilliant at the same time. I have had the pleasure to work with some of the most talented people that I will probably ever work with, people who are deeply passionate about doing the right thing in the right way for the client.</p>
+<p>I leave with a light heart, safe and secure in the knowledge that I leave Infinity a different place to that which I joined, but that which is changing for the better in many ways.  That’s it, the end, now you’ll have to start explaining to people the origin of the phrase “just be a bit less ‘Tom Gray’” – but I’m sure that will be a good thing.  I can certainly believe that Charlotte and her team will have less to do now.</p>
+<p>I am indebted to you all for what I have been able to learn from each of you, and the world of technology being the incredibly small world it is – I’m certain that I will see/work with you all again at some point in the future.  In terms of a leaving ‘do’, my current plan is to pop back into Apsley when it’s back open again (and the pubs are open again) and organise a bit of a session where we can get together.</p>
+<p>Also in true ‘those who leave IW and to go AWS’ fashion, I’m going to try and wrangle my way into the Christmas party too, because you all should have the opportunity to tell me to ‘f*** off’ at least once more..</p>
+<p>To infinity and beyond. Don’t forget to seize the fish.</p>
+<p>Tom</p>
+]]></content>
+        </item>
+        
+    </channel>
 </rss>

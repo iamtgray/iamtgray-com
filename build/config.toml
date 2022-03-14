@@ -3,7 +3,7 @@ title = "iamtgray"
 languageCode = "en"
 enableInlineShortcodes = true
 
-theme = "soho"
+theme = "hello-friend-ng"
 
 summarylength = 10
 enableEmoji = true
@@ -74,3 +74,18 @@ customJs = ["js/blog.js"]
   noClasses = true # if false, you need to provide you own custom CSS
   style = "monokai"
   tabWidth = 4
+
+[languages]
+  [languages.en]
+    title = "Hello, I am Tom Gray"
+    subtitle = "An engineer, consultant and architect"
+    keywords = ""
+    copyright = '<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
+    readOtherPosts = "Read other posts"
+
+    [languages.en.params.logo]
+      logoText = "iamtgray"
+      logoHomeLink = "/"
+    # or
+    #
+
