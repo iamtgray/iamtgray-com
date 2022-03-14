@@ -6,7 +6,16 @@
     <description>Recent content on iamtgray</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 28 May 2020 09:41:18 +0100</lastBuildDate><atom:link href="https://iamtgray.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 14 Mar 2022 08:54:14 +0100</lastBuildDate><atom:link href="https://iamtgray.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Securing your CI/CD Pipelines</title>
+      <link>https://iamtgray.com/posts/secure-ci-cd-pipelines/</link>
+      <pubDate>Mon, 14 Mar 2022 08:54:14 +0100</pubDate>
+      
+      <guid>https://iamtgray.com/posts/secure-ci-cd-pipelines/</guid>
+      <description>When speaking to customers about security, I always try to raise the topic of shifting security left.</description>
+    </item>
+    
     <item>
       <title>About me</title>
       <link>https://iamtgray.com/about/</link>

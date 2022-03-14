@@ -1,7 +1,7 @@
 ---
 title: "Securing your CI/CD Pipelines"
 date: 2022-03-14T08:54:14+01:00
-draft: true
+draft: false
 ---
 
 When speaking to customers about security, I always try to raise the topic of shifting security left.  This relatively moden practice and thinking comes from the dual need to not only (a) de-burden the security team from the low-value tasks of approving individual changes, and (b) allowing the software engineering teams inside the organisation to increase the speed of change, while keeping the security bar high.
