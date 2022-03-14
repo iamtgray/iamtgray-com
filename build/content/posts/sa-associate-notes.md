@@ -4,6 +4,14 @@ date: 2020-05-28T09:41:18+01:00
 draft: false
 ---
 
+Update as of March 2022 - I have now achieved AWS SA Associate, AWS SA Professional and AWS Security Speciality certifications.
+My experience has so far been that all three associate qualifications combined effectively produce one SA Pro, and the move from SA pro into the specialty certifications is not large, and geenrally involves going only a little deeper.
+
+The exam with the highest bar (so far) has been the AWS DevOps Pro certification.
+
+---
+
+
 As part of my new role @ AWS, I (unsurprisingly) need to get a bit more certified on paper than a simple "Don't worry mate, I've been doing this for years.." so for the first year of my new role, I will have a heavy focus on learning, and part of that will be my certifications.
 
 The first one I will go for is the AWS SA Associate exam, which by all accouts should be pretty easy - I did a practice exam and passed, so I'm pretty confident that all should be well.  Overkill being the underrated thing that it is though, I thought I should do some more formal study for the exam (as i'm going to have to start getting used to doing that!).
