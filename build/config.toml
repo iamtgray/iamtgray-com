@@ -15,13 +15,13 @@ dateformNum     = "01-02-2006"
 dateformNumTime = "01-02-2006 15:04"
 
 # Subtitle for home
-homeSubtitle = "The blog of TOm Gray"
+homeSubtitle = "The blog of Tom Gray"
 
 # Set disableReadOtherPosts to true in order to hide the links to other posts.
-disableReadOtherPosts = false
+disableReadOtherPosts = true
 
 # Enable sharing buttons, if you like
-enableSharingButtons = true
+enableSharingButtons = false
 
 # Metadata mostly used in document's head
 description = "Thomas Gray (architect at AWS) personal blog"
