@@ -10,7 +10,7 @@ It takes a real shift in mindset for most organisations (and the security teams 
 
 Take the below example of a common CI/CD pipeline pattern:
 
-![Example CI/CD Pipeline](/img/ci-cd-pipelines/basic-ci-cd-pipeline.png)
+![Example CI/CD Pipeline](/img/ci-cd-pipelines/basic-ci-cd-pipeline.png) 
 
 Looking at the example given above, normally security would be inserted (manually) just after the "Auto Test" step.  Security tickets would be cut, and a representative from infosec might review the changes being made to production, they might run a vulnerability scan against the application, and possibly even review some code before approving the release.
 
