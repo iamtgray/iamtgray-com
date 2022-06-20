@@ -28,11 +28,20 @@ In the market today, there are hundreds of different peieces of software to help
 
 This post does not focus on the specific tools (there are dive-deep posts for that) but instead focuses on the overall goal, and how it can be achieved.
 
+
+### Different tooling types
+
+1. SAST: Static Analysis Security Testing is the most common, basic and well-used automated security testing tool in CI/CD pipelines.  SAST analysis examines the code in the application, and attempts to determine through fixed rules or models if an application has inherent security flaws.  SAST tooling is excellent for detecting basic configuration errors, but is also capable (when using the right tools) of detecting more advanced threats such as inputs that are not cleaned, or overflow attacks
+2. DAST: Dynamic Analysis Security Testing is a less common but still effective method of detecting security vulnerabilities in software. DAST tooling is designed to work in concert with a running application, and through monitoring the flow of data throgh the software, can help to uncover potential bugs and security flaws with how (for example) data is handled as it flows around the application
+3. Dependency Scanning: There are a numebr of different tools (both inside and outside of the AWS ecosystem) to help track and scan application dependencies.  Given the prevelance and risk of supply chain attacks, many organisations face tough decisions when attempting to choose between giving the engineering teams the freedom to use libraries to help them perform their work more effecively, and managing the inherent risk of bringing 3rd party code into your application.  Dependency scanning tools (examples of which can be found below) can help to mitigate some of these risks, and along with SAST and DAST tooling can help to further reduce the risk.
+
+
 ## A more expansive pipeline
 
 If we want to integrate greater security controls into our CI/CD pipeline, then we need to look at a pipeline and consider the best place to bring those kind of controls in, take the below picture as a starting point:
 
 ![Example CI/CD Pipeline](/img/ci-cd-pipelines/ci-cd-pipeline-example-automation.png)
+
 
 ### Before commit
 
