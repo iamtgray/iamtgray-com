@@ -29,7 +29,6 @@ keywords = "homepage, blog"
 images = [""]
 
 author = "Thomas Gray"
-description = "My Personal Blog"
 
 ## Set one of:
 gravatar = "tom@osg.me"
