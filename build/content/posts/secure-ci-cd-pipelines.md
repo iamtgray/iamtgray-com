@@ -36,36 +36,36 @@ This post does not focus on the specific tools (there are dive-deep posts for th
 3. Dependency Scanning: There are a numebr of different tools (both inside and outside of the AWS ecosystem) to help track and scan application dependencies.  Given the prevelance and risk of supply chain attacks, many organisations face tough decisions when attempting to choose between giving the engineering teams the freedom to use libraries to help them perform their work more effecively, and managing the inherent risk of bringing 3rd party code into your application.  Dependency scanning tools (examples of which can be found below) can help to mitigate some of these risks, and along with SAST and DAST tooling can help to further reduce the risk.
 
 
-## A more expansive pipeline
+# A more expansive pipeline
 
 If we want to integrate greater security controls into our CI/CD pipeline, then we need to look at a pipeline and consider the best place to bring those kind of controls in, take the below picture as a starting point:
 
 ![Example CI/CD Pipeline](/img/ci-cd-pipelines/ci-cd-pipeline-example-automation.png)
 
 
-### Before commit
+## Before commit
 
 We want to perform as many checks as practical before the engineer commits any code to repo - this is due to our need to reduce alert fatigue and keep our team functioning at a high velocity.
 
-#### IDE Linting
+### IDE Linting
 
 This can be an excellent control for any organisation, your IDE gives you instant feedback when writing software, and bringing linting that works to maintain and enhance your security posture can give real benefits and gains to your team members.
 
 The exceptionally short feedback cycle reduces mental fatigue on the team, and reduces frustration with security controls 'getting in the way of work'
 
-#### SAST Scanning
+### SAST Scanning
 
 Another on-machine scan that can easily be performed as pre-commit hook would be a basic SAST scan, this in combination with linting in the IDE can give early feedback to your users.  Choosing a SAST scanner that can look at specific files will mean the scans can run quickly, and giving users that feedback as early as possbile will help to reduce fatigue.
 
 *Note* While a pre-commit hook is a mechanism to have a scan performed before merge, this can still increase frustration in your engineers, so choose your rule-set wisely, each rule must have a business purpose, applying a set of defaults and forgetting about it is likely to cause normalisation of deviance.
 
-### Post-commit checks
+## Post-commit checks
 
 For all the checks that we could perform on the user's machine, we now have likely eliminated the most obvious errors and threats in our codebase - SAST scanning on individual files likely means we have ensured that no secrets are hard coded, no basic input manipulation bugs are present.
 
 Now are checks are likely to take longer, but occur in a timescale in which our customer (the engineer) is expecting minutes of time, not tenths of a second.
 
-#### Library version scanning
+### Library version scanning
 
 An argument can be made that this scan can be performed on the engineers machine during their work as fixing a library being out-of-date will require additional testing to ensure that no breaking changes are being brought in.
 
@@ -73,46 +73,46 @@ Checking the versions of all of the dependencies of your applications to ensure 
 
 N.b. Important to note that library scanning tools check versions and don't generally perform SAST or DAST checks, so your supply chain can still be broken for a period before a vulerability is reported agasinst the library you use.
 
-#### Deep SAST scanning
+### Deep SAST scanning
 
 While not an official term in the industry, I use the term "Deep SAST" to differentiate a SAST scan that will be run across the entire codebase, libraries and dependencies.  This is to try to mitigate further supply-chain based vectors, and ensure compliance.  These SAST scans will need to focus not on code quality (which was what we checked pre-commit) but more on obvious vulnerabilities.
 
 
-#### IaC code scanning
+### IaC code scanning
 
 If you are using IaC (which you should be) to manage your deployed environment, then an easy way to implement organisational controls into your engineering and ensure guard-rails are properly applied before they get into the environment, is to implement a set of IaC Code Scanning tools. 
 
 For more detail on this - check out the [post I have created on IaC code scanning](/bring-controls-into-ci-cd-with-iac-scanning/)
 
-### Post pull-request changes
+## Post pull-request changes
 
 Assuming that your engineering team operates on a pull-request model, where changes are peer reviewed before being merged into the development branch (which is a generally reccomended practice) then you can perform further and more intensive compliance checks in the build system.
 
 It is expected by engineers that builds will take minutes at least, and are generally a great time to go off and grab a hot beverage of choice, in this time we can run more intrusive and time/compute intensive checks
 
-#### DAST Scanning
+### DAST Scanning
 
 At build time can be a great time to run DAST tooling against your application - you've got an integrated built/compiled application at this point, so you can trigger a DAST scan against your application.
 
 N.b. this scan will likely find more complex bugs/vulernabilities - but you are still testing components in isolation rather than integration, consider running further scans post-integration (see Automated pen testing).
 
-#### Security Regression testing
+### Security Regression testing
 
 This one is frequently missed by high-speed engineering teams, but can be vitally important to ensuring compliance - having a regression pack not only for normal failures in an application discovered, but also for security incidents discovered can be vitally important.
 
 Having this pack seperate from your normal automated DAST/SAST/Pen Test pack ensures that changes to the underlying scanning engines do not stop or change detection on previously detected vulnerbailities
 
 
-### Deployment
+## Deployment
 
 Once you have a build codebase that has now been deployed to some kind of testing environment, you can now perform security integration tests against your workload.  This is the time to bring in fuzzing and rules based testing systems that act on all inputs to your application to ensure that the application continues to behave as expected
 
-#### Automated pen testing
+### Automated pen testing
 
 Using tools to run an automated application vulnerability assessment on your application can provide continuous assurance to the information security function in the organisation that continous compliance is being upheld
 
 
-#### Special mention: Automated load testing
+### Special mention: Automated load testing
 
 A special mention here (and a favorite of mine) is automating load testing at this stage.  Having a basic performance pack run against your application ensures that if your application comes under a DoS attack that you know how your application will respond.
 
