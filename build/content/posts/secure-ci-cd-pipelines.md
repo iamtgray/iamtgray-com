@@ -42,8 +42,10 @@ If we want to integrate greater security controls into our CI/CD pipeline, then 
 
 ![Example CI/CD Pipeline](/img/ci-cd-pipelines/ci-cd-pipeline-example-automation.png)
 
+Let's get into the checks we've added
 
-## Before commit
+
+## Before commit
 
 We want to perform as many checks as practical before the engineer commits any code to repo - this is due to our need to reduce alert fatigue and keep our team functioning at a high velocity.
 

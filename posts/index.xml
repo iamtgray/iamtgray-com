@@ -37,7 +37,8 @@
 <h1 id="a-more-expansive-pipeline">A more expansive pipeline</h1>
 <p>If we want to integrate greater security controls into our CI/CD pipeline, then we need to look at a pipeline and consider the best place to bring those kind of controls in, take the below picture as a starting point:</p>
 <p><img src="/img/ci-cd-pipelines/ci-cd-pipeline-example-automation.png" alt="Example CI/CD Pipeline"></p>
-<p>## Before commit</p>
+<p>Let&rsquo;s get into the checks we&rsquo;ve added</p>
+<h2 id="before-commit">Before commit</h2>
 <p>We want to perform as many checks as practical before the engineer commits any code to repo - this is due to our need to reduce alert fatigue and keep our team functioning at a high velocity.</p>
 <h3 id="ide-linting">IDE Linting</h3>
 <p>This can be an excellent control for any organisation, your IDE gives you instant feedback when writing software, and bringing linting that works to maintain and enhance your security posture can give real benefits and gains to your team members.</p>
