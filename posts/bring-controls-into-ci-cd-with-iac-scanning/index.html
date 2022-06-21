@@ -45,7 +45,7 @@
 <meta itemprop="name" content="Bringing security controls into CI/CD with IaC scanning">
 <meta itemprop="description" content="In a recent blog post I wrote about the overall controls that can be built into your CI/CD pipelines to increase your security posture."><meta itemprop="datePublished" content="2022-06-20T17:10:14+01:00" />
 <meta itemprop="dateModified" content="2022-06-20T17:10:14+01:00" />
-<meta itemprop="wordCount" content="871"><meta itemprop="image" content="https://iamtgray.com/"/>
+<meta itemprop="wordCount" content="1561"><meta itemprop="image" content="https://iamtgray.com/"/>
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://iamtgray.com/"/>
@@ -124,7 +124,7 @@
           <circle cx="12" cy="12" r="10"></circle>
           <polyline points="12 6 12 12 16 14"></polyline>
         </svg>
-        5 minutes
+        8 minutes
 
         
       </p>
@@ -142,7 +142,7 @@
       
 
       <div class="post-content">
-        <p>In a <a href="/secure-ci-cd-pipelines/">recent blog post</a> I wrote about the overall controls that can be built into your CI/CD pipelines to increase your security posture.</p>
+        <p>In a <a href="/posts/secure-ci-cd-pipelines/">recent blog post</a> I wrote about the overall controls that can be built into your CI/CD pipelines to increase your security posture.</p>
 <p>This post aims to dive deeper into the specifics of IaC (Infrastructure as Code) scanning, and explore <em>some</em> of the tools available to you.</p>
 <h1 id="preface">Preface</h1>
 <p>Before diving into how to resolve the problem, let&rsquo;s frame the problem that exists in the entire security landscape, and is especially true in highly automated environments, that is the problem of &ldquo;normalisation of deviance&rdquo; (or &ldquo;normalization of deviance&rdquo; for my American collegues).</p>
@@ -179,6 +179,112 @@ Remediate all users or roles that are created without the correct boundaries on 
 <p>CFN Nag is useful for detecting indications of insecure or incorrectly configured infrastructure as code.  Examples of this include IAM rules that are overly permissive, security group rules that are overly permissive - but also extends to access logs or encryption that’s disabled and even password literals found in the code.</p>
 <h2 id="cfn-guard">CFN Guard</h2>
 <p>CFN Guard is the real meat on the IaC compliance when it comes to AWS CloudFormation (and even Terraform at a push)</p>
+<p>It&rsquo;s a tool that has been developed by AWS SA&rsquo;s to take in an given set of rules, and parse a CloudFormation template against the given rules.  It has it&rsquo;s own custom DSL (sigh) but implements basic operands and comparitors that allow you to write a functional rule set.  Take the below CloudFormation and corresponding set of business rules as an example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">AWSTemplateFormatVersion</span>: <span style="color:#e6db74">&#34;2010-09-09&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">Description</span>: <span style="color:#e6db74">&#34;Demo CFN for creating roles/users in this example for a sample DynamoDB Lambda Execution&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">Resources</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">TestRole</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">Type</span>: <span style="color:#ae81ff">AWS::IAM::Role</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">Properties</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">AssumeRolePolicyDocument</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">Version</span>: <span style="color:#e6db74">&#34;2012-10-17&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">Statement</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">Effect</span>: <span style="color:#ae81ff">Allow</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">Principal</span>:
+</span></span><span style="display:flex;"><span>              <span style="color:#f92672">Service</span>:
+</span></span><span style="display:flex;"><span>                - <span style="color:#ae81ff">ec2.amazonaws.com</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">Action</span>:
+</span></span><span style="display:flex;"><span>              - <span style="color:#e6db74">&#39;sts:AssumeRole&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">PermissionsBoundary</span>: <span style="color:#ae81ff">arn:aws:iam:::policy/PermissionBoundary</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">RoleName</span>: <span style="color:#ae81ff">EC2S3Access</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">Description</span>: <span style="color:#ae81ff">Test role that implements the right controls</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">ManagedPolicyArns</span>: 
+</span></span><span style="display:flex;"><span>        - <span style="color:#ae81ff">arn:aws:iam::aws:policy/DynamoS3AccessPolicy</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">DynamoS3AccessPolicy</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">Type</span>: <span style="color:#ae81ff">AWS::IAM::ManagedPolicy</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">Properties</span>: 
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">Description</span>: <span style="color:#ae81ff">Managed Policy..</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">ManagedPolicyName</span>: <span style="color:#ae81ff">DynamoS3Access</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">Path</span>: <span style="color:#ae81ff">/</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">PolicyDocument</span>: 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">Version</span>: <span style="color:#e6db74">&#34;2012-10-17&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">Statement</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#f92672">Effect</span>: <span style="color:#ae81ff">Allow</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">Action</span>:
+</span></span><span style="display:flex;"><span>              - <span style="color:#e6db74">&#39;dynamodb:Query&#39;</span>
+</span></span><span style="display:flex;"><span>              - <span style="color:#e6db74">&#39;dynamodb:Scan&#39;</span>
+</span></span><span style="display:flex;"><span>              - <span style="color:#e6db74">&#39;s3:*&#39;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">Resource</span>: <span style="color:#e6db74">&#39;*&#39;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">Roles</span>: 
+</span></span><span style="display:flex;"><span>        - !<span style="color:#ae81ff">Ref TestRole</span>
+</span></span></code></pre></div><p>There are (if you&rsquo;ve written any CloudFormation before) a number of key issues with this, while it is valid and will deploy - it has a tightly coupled policy to role (meaning replacement of one requires replacement of the other) as well as a number of * allow conditions across actions and resources.  This kind of CloudFormation is the style we want to stop entering our environments - to do this we can write some basic rules in CFNGuard that stop this bad practice:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">CFN</span> <span style="color:#a6e22e">Guard</span> <span style="color:#a6e22e">Rules</span> <span style="color:#a6e22e">designed</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">assist</span> <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">the</span> <span style="color:#a6e22e">prevention</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">privilege</span> <span style="color:#a6e22e">escalation</span> <span style="color:#a6e22e">attacks</span> <span style="color:#a6e22e">inside</span> <span style="color:#a6e22e">AWS</span>.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">aws_iam_role_user_resources</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Resources</span>.<span style="color:#f92672">*</span>[
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">Type</span> <span style="color:#66d9ef">in</span> [ <span style="color:#e6db74">/IAM::Role/</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">/IAM::User/</span> ]
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">iam_policies</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Resources</span>.<span style="color:#f92672">*</span>[ <span style="color:#a6e22e">Type</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">/IAM::Policy/</span> ]
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">iam_managed_policies</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Resources</span>.<span style="color:#f92672">*</span>[ <span style="color:#a6e22e">Type</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">/IAM::ManagedPolicy/</span> ]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">rule</span> <span style="color:#a6e22e">aws_iam_role_user_resources</span> <span style="color:#a6e22e">when</span> <span style="color:#f92672">%</span><span style="color:#a6e22e">aws_iam_role_user_resources</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">empty</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">Ensure</span> <span style="color:#a6e22e">that</span> <span style="color:#a6e22e">they</span> <span style="color:#a6e22e">are</span> <span style="color:#a6e22e">setting</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">permission</span> <span style="color:#a6e22e">boundary</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">%</span><span style="color:#a6e22e">aws_iam_role_user_resources</span>.<span style="color:#a6e22e">Properties</span>.<span style="color:#a6e22e">PermissionsBoundary</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">empty</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">Ensure</span> <span style="color:#a6e22e">that</span> <span style="color:#a6e22e">the</span> <span style="color:#a6e22e">permission</span> <span style="color:#a6e22e">boundary</span> <span style="color:#a6e22e">set</span> <span style="color:#a6e22e">is</span> <span style="color:#a6e22e">the</span> <span style="color:#a6e22e">GeneralPermissionBoundary</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">%</span><span style="color:#a6e22e">aws_iam_role_user_resources</span>.<span style="color:#a6e22e">Properties</span>.<span style="color:#a6e22e">PermissionsBoundary</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">/policy\/PermissionBoundary/</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#960050;background-color:#1e0010">#</span>  <span style="color:#a6e22e">Stop</span> <span style="color:#a6e22e">people</span> <span style="color:#a6e22e">creating</span> <span style="color:#a6e22e">cicd</span><span style="color:#f92672">-</span> <span style="color:#a6e22e">roles</span> <span style="color:#a6e22e">directly</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">%</span><span style="color:#a6e22e">aws_iam_role_user_resources</span>.<span style="color:#a6e22e">Properties</span>.<span style="color:#a6e22e">RoleName</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">/^cicd-/</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">rule</span> <span style="color:#a6e22e">managed_policies_not_called_permission_boundary</span> <span style="color:#a6e22e">when</span> <span style="color:#f92672">%</span><span style="color:#a6e22e">iam_managed_policies</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">empty</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">when</span> <span style="color:#f92672">%</span><span style="color:#a6e22e">iam_managed_policies</span>.<span style="color:#a6e22e">Properties</span>.<span style="color:#a6e22e">ManagedPolicyName</span> <span style="color:#a6e22e">exists</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">%</span><span style="color:#a6e22e">iam_managed_policies</span>.<span style="color:#a6e22e">Properties</span>.<span style="color:#a6e22e">ManagedPolicyName</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">/GeneralPermissionBoundary/</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">rule</span> <span style="color:#a6e22e">policies_not_called_permission_boundary</span> <span style="color:#a6e22e">when</span> <span style="color:#f92672">%</span><span style="color:#a6e22e">iam_policies</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">empty</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">when</span> <span style="color:#f92672">%</span><span style="color:#a6e22e">iam_policies</span>.<span style="color:#a6e22e">Properties</span>.<span style="color:#a6e22e">PolicyName</span> <span style="color:#a6e22e">exists</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">%</span><span style="color:#a6e22e">iam_policies</span>.<span style="color:#a6e22e">Properties</span>.<span style="color:#a6e22e">PolicyName</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">/GeneralPermissionBoundary/</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">iam_policies_allowing</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Resources</span>.<span style="color:#f92672">*</span>[
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Type</span> <span style="color:#66d9ef">in</span> [<span style="color:#e6db74">/IAM::Policy/</span>, <span style="color:#e6db74">/IAM::ManagedPolicy/</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">some</span> <span style="color:#a6e22e">Properties</span>.<span style="color:#a6e22e">PolicyDocument</span>.<span style="color:#a6e22e">Statement</span>[<span style="color:#f92672">*</span>] {
+</span></span><span style="display:flex;"><span>         <span style="color:#a6e22e">some</span> <span style="color:#a6e22e">Action</span>[<span style="color:#f92672">*</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">/:\*/</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">rule</span> <span style="color:#a6e22e">iam_policies_cannot_allow_stars</span> <span style="color:#a6e22e">when</span> <span style="color:#f92672">%</span><span style="color:#a6e22e">iam_policies_allowing</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">empty</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">%</span><span style="color:#a6e22e">iam_policies_allowing</span>.<span style="color:#a6e22e">Properties</span>.<span style="color:#a6e22e">PolicyDocument</span>.<span style="color:#a6e22e">Statement</span>[<span style="color:#f92672">*</span>].<span style="color:#a6e22e">Effect</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;Deny&#34;</span> <span style="color:#f92672">&lt;&lt;</span><span style="color:#a6e22e">You</span> <span style="color:#a6e22e">cannoy</span> <span style="color:#a6e22e">have</span> <span style="color:#a6e22e">an</span> <span style="color:#a6e22e">allow</span> <span style="color:#f92672">*</span>, <span style="color:#f92672">*</span> <span style="color:#a6e22e">is</span> <span style="color:#a6e22e">only</span> <span style="color:#a6e22e">allowed</span> <span style="color:#a6e22e">during</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">deny</span><span style="color:#f92672">&gt;&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">%</span><span style="color:#a6e22e">iam_policies_allowing</span>.<span style="color:#a6e22e">Properties</span>.<span style="color:#a6e22e">PolicyDocument</span>.<span style="color:#a6e22e">Statement</span>[<span style="color:#f92672">*</span>].<span style="color:#a6e22e">Resource</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">/^\*/</span> <span style="color:#f92672">&lt;&lt;</span><span style="color:#a6e22e">You</span> <span style="color:#a6e22e">cannot</span> <span style="color:#a6e22e">apply</span> <span style="color:#a6e22e">IAM</span> <span style="color:#a6e22e">policies</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">all</span> <span style="color:#a6e22e">resources</span>, <span style="color:#a6e22e">they</span> <span style="color:#a6e22e">must</span> <span style="color:#a6e22e">be</span> <span style="color:#a6e22e">down</span><span style="color:#f92672">-</span><span style="color:#a6e22e">scoped</span><span style="color:#f92672">&gt;&gt;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="other-tools-some-commercial">Other tools (some commercial)</h1>
+<p>## Sentinel - Hashicorp</p>
+<p>Released by Hashicorp, sentinel is an IaC scanning tool that&rsquo;s specifically designed for Terraform/Vault/Consul/Nomad policies as code.</p>
+<p>Much the same as CFN Guard, you can define your organisational policies and controls once, and use a tool like Sentinel to enforce those policies as early as possible in the development lifecycle.</p>
+<h2 id="checkov">Checkov</h2>
+<p>This one is similar to CFN Nag but is built for multiple cloud providers and IaC providers.  There are more than 1000 default rules in Checkov, but that&rsquo;s spread across AWS/GCP/Azure with seperate rule sets for CFN, TF and the others</p>
+<p>It&rsquo;s not overly simple (though possible) to extend the rule set given, but it&rsquo;s a great one for multi-cloud out of the box.</p>
+<h2 id="open-policy-agent">Open Policy Agent</h2>
+<p>OPA (oh-paa) the Open Policy Agent is attempting to decouple the build from runtime policy - this is a really interesting and head scratching policy enforcement agent.</p>
+<p>As a direct quote from their website:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>The Open Policy Agent (OPA, pronounced “oh-pa”) is an open source, 
+</span></span><span style="display:flex;"><span>general-purpose policy engine that unifies policy enforcement 
+</span></span><span style="display:flex;"><span>across the stack. OPA provides a high-level declarative language
+</span></span><span style="display:flex;"><span>that lets you specify policy as code and simple APIs to offload 
+</span></span><span style="display:flex;"><span>policy decision-making from your software. You can use OPA to 
+</span></span><span style="display:flex;"><span>enforce policies in microservices, Kubernetes, CI/CD pipelines, 
+</span></span><span style="display:flex;"><span>API gateways, and more.
+</span></span></code></pre></div><h1 id="summary">Summary</h1>
+<p>There are many <em>many</em> <em><em>many</em></em> tools available to you and your organisation for IaC, I would suggest you start small, trying to go &rsquo;the whole hog&rsquo; will be a lot of change very soon, and implementing the right kind of policy as-code controls will take time for any security function.   I would reccomend starting with an open source tool that has inbuilt rules, then expanding your custom rules and policies from there.</p>
 
       </div>
     </article>
@@ -197,7 +303,7 @@ Remediate all users or roles that are created without the correct boundaries on 
           <line x1="16" y1="17" x2="8" y2="17"></line>
           <polyline points="10 9 9 9 8 9"></polyline>
         </svg>
-        871 Words
+        1561 Words
       </p>
 
       <p>

@@ -4,7 +4,7 @@ date: 2022-06-20T17:10:14+01:00
 draft: false
 ---
 
-In a [recent blog post](/secure-ci-cd-pipelines/) I wrote about the overall controls that can be built into your CI/CD pipelines to increase your security posture.
+In a [recent blog post](/posts/secure-ci-cd-pipelines/) I wrote about the overall controls that can be built into your CI/CD pipelines to increase your security posture.
  
 This post aims to dive deeper into the specifics of IaC (Infrastructure as Code) scanning, and explore *some* of the tools available to you.
  
@@ -115,7 +115,7 @@ Resources:
 
 There are (if you've written any CloudFormation before) a number of key issues with this, while it is valid and will deploy - it has a tightly coupled policy to role (meaning replacement of one requires replacement of the other) as well as a number of * allow conditions across actions and resources.  This kind of CloudFormation is the style we want to stop entering our environments - to do this we can write some basic rules in CFNGuard that stop this bad practice:
 
-```
+```javascript
 # CFN Guard Rules designed to assist in the prevention of privilege escalation attacks inside AWS.
 
 let aws_iam_role_user_resources = Resources.*[
@@ -160,3 +160,39 @@ rule iam_policies_cannot_allow_stars when %iam_policies_allowing !empty {
   %iam_policies_allowing.Properties.PolicyDocument.Statement[*].Resource == /^\*/ <<You cannot apply IAM policies to all resources, they must be down-scoped>>
 }
 ```
+
+# Other tools (some commercial)
+
+## Sentinel - Hashicorp
+
+Released by Hashicorp, sentinel is an IaC scanning tool that's specifically designed for Terraform/Vault/Consul/Nomad policies as code.
+
+Much the same as CFN Guard, you can define your organisational policies and controls once, and use a tool like Sentinel to enforce those policies as early as possible in the development lifecycle.
+
+## Checkov
+
+This one is similar to CFN Nag but is built for multiple cloud providers and IaC providers.  There are more than 1000 default rules in Checkov, but that's spread across AWS/GCP/Azure with seperate rule sets for CFN, TF and the others
+
+It's not overly simple (though possible) to extend the rule set given, but it's a great one for multi-cloud out of the box.
+
+## Open Policy Agent 
+
+OPA (oh-paa) the Open Policy Agent is attempting to decouple the build from runtime policy - this is a really interesting and head scratching policy enforcement agent.  
+
+As a direct quote from their website: 
+
+```text
+The Open Policy Agent (OPA, pronounced “oh-pa”) is an open source, 
+general-purpose policy engine that unifies policy enforcement 
+across the stack. OPA provides a high-level declarative language
+that lets you specify policy as code and simple APIs to offload 
+policy decision-making from your software. You can use OPA to 
+enforce policies in microservices, Kubernetes, CI/CD pipelines, 
+API gateways, and more.
+
+```
+
+# Summary
+
+There are many _many_ *_many_* tools available to you and your organisation for IaC, I would suggest you start small, trying to go 'the whole hog' will be a lot of change very soon, and implementing the right kind of policy as-code controls will take time for any security function.   I would reccomend starting with an open source tool that has inbuilt rules, then expanding your custom rules and policies from there.
+

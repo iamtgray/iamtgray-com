@@ -183,7 +183,7 @@
 <p>While not an official term in the industry, I use the term &ldquo;Deep SAST&rdquo; to differentiate a SAST scan that will be run across the entire codebase, libraries and dependencies.  This is to try to mitigate further supply-chain based vectors, and ensure compliance.  These SAST scans will need to focus not on code quality (which was what we checked pre-commit) but more on obvious vulnerabilities.</p>
 <h3 id="iac-code-scanning">IaC code scanning</h3>
 <p>If you are using IaC (which you should be) to manage your deployed environment, then an easy way to implement organisational controls into your engineering and ensure guard-rails are properly applied before they get into the environment, is to implement a set of IaC Code Scanning tools.</p>
-<p>For more detail on this - check out the <a href="/bring-controls-into-ci-cd-with-iac-scanning/">post I have created on IaC code scanning</a></p>
+<p>For more detail on this - check out the <a href="/posts/bring-controls-into-ci-cd-with-iac-scanning/">post I have created on IaC code scanning</a></p>
 <h2 id="post-pull-request-changes">Post pull-request changes</h2>
 <p>Assuming that your engineering team operates on a pull-request model, where changes are peer reviewed before being merged into the development branch (which is a generally reccomended practice) then you can perform further and more intensive compliance checks in the build system.</p>
 <p>It is expected by engineers that builds will take minutes at least, and are generally a great time to go off and grab a hot beverage of choice, in this time we can run more intrusive and time/compute intensive checks</p>
@@ -201,7 +201,7 @@
 <p>A special mention here (and a favorite of mine) is automating load testing at this stage.  Having a basic performance pack run against your application ensures that if your application comes under a DoS attack that you know how your application will respond.</p>
 <p>While not directly part of the compliance of the application - having an awareness of how your application behaves can be advantagoes, and will allow you to spot patterns and trends in changes to application behavior under load.</p>
 <h1 id="summary">Summary</h1>
-<p>This post has focused on the pipeline itself, and has steered away from specific tooling that can be used.  The purpose of not focusing on the tools is that you as the user must choose the tools that meet your compliance requirements and orgnisational goals - while the &lsquo;dive deep&rsquo; articles like the <a href="/bring-controls-into-ci-cd-with-iac-scanning/">infrastructure as code scanning</a> do go deeper into the available tools - these sets of best practices allow you to see where you can aim for, without getting bogged down in tooling selection.</p>
+<p>This post has focused on the pipeline itself, and has steered away from specific tooling that can be used.  The purpose of not focusing on the tools is that you as the user must choose the tools that meet your compliance requirements and orgnisational goals - while the &lsquo;dive deep&rsquo; articles like the <a href="/posts/bring-controls-into-ci-cd-with-iac-scanning/">infrastructure as code scanning</a> do go deeper into the available tools - these sets of best practices allow you to see where you can aim for, without getting bogged down in tooling selection.</p>
 <p>Elevating your thinking to solving the overarchiing problem of compliance in your CI/CD pipelines is nessesary to not get bogged down in detail, and forget the organisational goal.</p>
 
       </div>

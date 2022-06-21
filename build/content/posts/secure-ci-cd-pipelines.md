@@ -84,7 +84,7 @@ While not an official term in the industry, I use the term "Deep SAST" to differ
 
 If you are using IaC (which you should be) to manage your deployed environment, then an easy way to implement organisational controls into your engineering and ensure guard-rails are properly applied before they get into the environment, is to implement a set of IaC Code Scanning tools. 
 
-For more detail on this - check out the [post I have created on IaC code scanning](/bring-controls-into-ci-cd-with-iac-scanning/)
+For more detail on this - check out the [post I have created on IaC code scanning](/posts/bring-controls-into-ci-cd-with-iac-scanning/)
 
 ## Post pull-request changes
 
@@ -123,6 +123,6 @@ While not directly part of the compliance of the application - having an awarene
 
 # Summary
 
-This post has focused on the pipeline itself, and has steered away from specific tooling that can be used.  The purpose of not focusing on the tools is that you as the user must choose the tools that meet your compliance requirements and orgnisational goals - while the 'dive deep' articles like the [infrastructure as code scanning](/bring-controls-into-ci-cd-with-iac-scanning/) do go deeper into the available tools - these sets of best practices allow you to see where you can aim for, without getting bogged down in tooling selection.
+This post has focused on the pipeline itself, and has steered away from specific tooling that can be used.  The purpose of not focusing on the tools is that you as the user must choose the tools that meet your compliance requirements and orgnisational goals - while the 'dive deep' articles like the [infrastructure as code scanning](/posts/bring-controls-into-ci-cd-with-iac-scanning/) do go deeper into the available tools - these sets of best practices allow you to see where you can aim for, without getting bogged down in tooling selection.
 
 Elevating your thinking to solving the overarchiing problem of compliance in your CI/CD pipelines is nessesary to not get bogged down in detail, and forget the organisational goal.

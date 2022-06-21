@@ -12,3 +12,5 @@ Dad & architect at Amazon Web Services (AWS), previsouly principal consultant at
 Lover of all things engineering, and a fairly true to type "full stack" engineer
 
 If you need me, you can reach out to me on any of the social things with the handle `iamtgray`.
+
+The views posted here are always my own, and are not nessicarily that of my employer.
