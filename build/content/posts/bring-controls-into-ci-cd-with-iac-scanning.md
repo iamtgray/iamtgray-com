@@ -64,3 +64,99 @@ CFN Nag is useful for detecting indications of insecure or incorrectly configure
 ## CFN Guard
 
 CFN Guard is the real meat on the IaC compliance when it comes to AWS CloudFormation (and even Terraform at a push) 
+
+It's a tool that has been developed by AWS SA's to take in an given set of rules, and parse a CloudFormation template against the given rules.  It has it's own custom DSL (sigh) but implements basic operands and comparitors that allow you to write a functional rule set.  Take the below CloudFormation and corresponding set of business rules as an example:
+
+```yaml
+
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Demo CFN for creating roles/users in this example for a sample DynamoDB Lambda Execution"
+
+Resources:
+
+
+  TestRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      PermissionsBoundary: arn:aws:iam:::policy/PermissionBoundary
+      RoleName: EC2S3Access
+      Description: Test role that implements the right controls
+      ManagedPolicyArns: 
+        - arn:aws:iam::aws:policy/DynamoS3AccessPolicy
+
+  DynamoS3AccessPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties: 
+      Description: Managed Policy..
+      ManagedPolicyName: DynamoS3Access
+      Path: /
+      PolicyDocument: 
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - 'dynamodb:Query'
+              - 'dynamodb:Scan'
+              - 's3:*'
+            Resource: '*'
+      Roles: 
+        - !Ref TestRole
+
+```
+
+There are (if you've written any CloudFormation before) a number of key issues with this, while it is valid and will deploy - it has a tightly coupled policy to role (meaning replacement of one requires replacement of the other) as well as a number of * allow conditions across actions and resources.  This kind of CloudFormation is the style we want to stop entering our environments - to do this we can write some basic rules in CFNGuard that stop this bad practice:
+
+```
+# CFN Guard Rules designed to assist in the prevention of privilege escalation attacks inside AWS.
+
+let aws_iam_role_user_resources = Resources.*[
+  Type in [ /IAM::Role/,
+            /IAM::User/ ]
+]
+
+let iam_policies = Resources.*[ Type == /IAM::Policy/ ]
+let iam_managed_policies = Resources.*[ Type == /IAM::ManagedPolicy/ ]
+
+rule aws_iam_role_user_resources when %aws_iam_role_user_resources !empty {
+  # Ensure that they are setting a permission boundary
+  %aws_iam_role_user_resources.Properties.PermissionsBoundary !empty
+  # Ensure that the permission boundary set is the GeneralPermissionBoundary
+  %aws_iam_role_user_resources.Properties.PermissionsBoundary == /policy\/PermissionBoundary/
+  #  Stop people creating cicd- roles directly
+  %aws_iam_role_user_resources.Properties.RoleName != /^cicd-/
+}
+
+rule managed_policies_not_called_permission_boundary when %iam_managed_policies !empty {
+
+  when %iam_managed_policies.Properties.ManagedPolicyName exists {
+    %iam_managed_policies.Properties.ManagedPolicyName != /GeneralPermissionBoundary/
+  }
+}
+
+rule policies_not_called_permission_boundary when %iam_policies !empty {
+  when %iam_policies.Properties.PolicyName exists {
+    %iam_policies.Properties.PolicyName != /GeneralPermissionBoundary/
+  }
+}
+
+let iam_policies_allowing = Resources.*[
+    Type in [/IAM::Policy/, /IAM::ManagedPolicy/]
+    some Properties.PolicyDocument.Statement[*] {
+         some Action[*] == /:\*/
+    }
+]
+
+rule iam_policies_cannot_allow_stars when %iam_policies_allowing !empty {
+  %iam_policies_allowing.Properties.PolicyDocument.Statement[*].Effect == "Deny" <<You cannoy have an allow *, * is only allowed during a deny>>
+  %iam_policies_allowing.Properties.PolicyDocument.Statement[*].Resource == /^\*/ <<You cannot apply IAM policies to all resources, they must be down-scoped>>
+}
+```
