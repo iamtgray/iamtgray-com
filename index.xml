@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Mon, 20 Jun 2022 16:10:14 +0100</lastBuildDate><atom:link href="https://iamtgray.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 20 Jun 2022 17:10:14 +0100</lastBuildDate><atom:link href="https://iamtgray.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bringing security controls into CI/CD with IaC scanning</title>
+      <link>https://iamtgray.com/posts/bring-controls-into-ci-cd-with-iac-scanning/</link>
+      <pubDate>Mon, 20 Jun 2022 17:10:14 +0100</pubDate>
+      
+      <guid>https://iamtgray.com/posts/bring-controls-into-ci-cd-with-iac-scanning/</guid>
+      <description>In a recent blog post I wrote about the overall controls that can be built into your CI/CD pipelines to increase your security posture.</description>
+    </item>
+    
     <item>
       <title>Securing your CI/CD Pipelines</title>
       <link>https://iamtgray.com/posts/secure-ci-cd-pipelines/</link>

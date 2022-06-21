@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="In a recent blog post I wrote about the overall controls that can be built into your CI/CD pipelines to increase your security posture." />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://iamtgray.com/posts/bring-controls-into-ci-cd-with-iac-scanning/" />
+
+
+    <title>
+        
+            Bringing security controls into CI/CD with IaC scanning :: Hello, I am Tom Gray  — An engineer, consultant and architect
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="/main.4e5c639214707eff609bb55fe49e183dee42258a73bc90e4cc7b0a84f900798a.css">
+
+
+    
+        <link rel="stylesheet" type="text/css" href="css/blog.css">
+    
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+<meta itemprop="name" content="Bringing security controls into CI/CD with IaC scanning">
+<meta itemprop="description" content="In a recent blog post I wrote about the overall controls that can be built into your CI/CD pipelines to increase your security posture."><meta itemprop="datePublished" content="2022-06-20T17:10:14+01:00" />
+<meta itemprop="dateModified" content="2022-06-20T17:10:14+01:00" />
+<meta itemprop="wordCount" content="871"><meta itemprop="image" content="https://iamtgray.com/"/>
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://iamtgray.com/"/>
+
+<meta name="twitter:title" content="Bringing security controls into CI/CD with IaC scanning"/>
+<meta name="twitter:description" content="In a recent blog post I wrote about the overall controls that can be built into your CI/CD pipelines to increase your security posture."/>
+
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2022-06-20 17:10:14 &#43;0100 BST" />
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">iamtgray</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/posts/">Posts</a></li><li><a href="/about/">About</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        5 minutes
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title">
+        <a href="https://iamtgray.com/posts/bring-controls-into-ci-cd-with-iac-scanning/">Bringing security controls into CI/CD with IaC scanning</a>
+      </h1>
+
+      
+
+      
+
+      
+
+      <div class="post-content">
+        <p>In a <a href="/secure-ci-cd-pipelines/">recent blog post</a> I wrote about the overall controls that can be built into your CI/CD pipelines to increase your security posture.</p>
+<p>This post aims to dive deeper into the specifics of IaC (Infrastructure as Code) scanning, and explore <em>some</em> of the tools available to you.</p>
+<h1 id="preface">Preface</h1>
+<p>Before diving into how to resolve the problem, let&rsquo;s frame the problem that exists in the entire security landscape, and is especially true in highly automated environments, that is the problem of &ldquo;normalisation of deviance&rdquo; (or &ldquo;normalization of deviance&rdquo; for my American collegues).</p>
+<p>Normally when I&rsquo;m talking to customers, I might get standard list of challenges from the team I’m talking too, they might be something like:</p>
+<p>“My security org can’t keep up with us”
+“We’re doing agile now, how does security fit in”
+“Security team have blocked us”</p>
+<p>These challenges are common and by that there are mechanisms we can use to reduce the internal cost of these - and work to keep the velocity of the engineering teams high, while also maintaining or (usually) the security bar.</p>
+<p>These kind of problems (and many like them) tend to breed a normalisation of deviance in the team.  Normalisation of deviance can be defined as “The gradual process through which unacceptable practice or standards becomes acceptable.”  To continue on this the original author of this quote (and the concept in general) Dr Diane Vaughan further added “as the deviant behaviour is repeated with catastrophic results, it becomes the social norm for the organisation”</p>
+<p>To make that sentence a little more real, you could define it like this:</p>
+<p>“
+New person joins the team
+New person: wtf wtf wtf wtf WTF WTF WTF
+Old hand: Yeah we know, we’re concerned about it
+New person: WTF WTF WTF wtf wtf wtf wt…
+New person gets used to it
+New person #2 joins
+New person #2: WTF WTF WTF
+New person: Yeah we know, we’re concerned about it.</p>
+<p>I like the above structure, because it actually reminds me both of me being the new guy into a team, and me being the old hand in the team - I’ve been in both of those roles in the past and challenging the behaviours I showed then is how I approach handling this with customers.</p>
+<p>The difference for those responsible for organisational security compliance in these situations - is that of awareness. Most security engineers that I’ve worked with don’t come from development backgrounds, and those that do are as rare as hen’s teeth.  Therefore the organisation needs to provide other mechanisms and controls to ensure that the compliance and governance goals of the organisation are met.</p>
+<p>For a lot of customers, this comes in the form of stricter policies.  More review steps required before changes go-live, increased spend with 3rd party penetration testing organisations, and a general reduction in team velocity.  I’ve also seen companies go the other way on this, and simply try to ignore the problem - scoping down their compliance to only focus on what they can tightly control, and drawing organisational boundaries to meet compliance requirements.   As you would expect, neither of these have worked well in my experience, and both lead to challenges for the people involved.</p>
+<p>One of the ways of breaking that circle, reducing the likelihood of a normalisation of deviance and increasing organisational control while still maintaining velocity - is that of automating the controls and governance of the organisation.  The more can be automated, and policy can be codified - the less organisational velocity will be lost by the need to implement those controls.</p>
+<p>Let’s take for example a small subset of an imagined organisational controls - let’s say they have taken the sensible step of wanting to ensure that no users can escalate their own privilege, and they need their audit to reliably demonstrate this.</p>
+<p>Below is a sample set of control requirements:</p>
+<p>Stop all users being able to escalate their role / amount of privilege inside the environment
+Stop the creation of high privilege roles that have a higher set of permissions than the user creating them
+Ensure that all users or roles are created by the CI/CD system and are therefore subject to the organisations policies
+Remediate all users or roles that are created without the correct boundaries on their permissions</p>
+<h1 id="the-tools">The tools</h1>
+<p>To be able to meet this and other compliance goals, there are a number of tools you can use.  The tools below focus heavily on the AWS Cloud, but some are mentioned (and noted) that support one or more cloud vendors, or are agnostic of the underlying cloud platform.</p>
+<h2 id="cfn-nag">CFN Nag</h2>
+<p>CFN Nag is a great linting tool (and executes quickly, so you can and should use it on an engineering machine rather than just in CI/CD).</p>
+<p>CFN Nag is useful for detecting indications of insecure or incorrectly configured infrastructure as code.  Examples of this include IAM rules that are overly permissive, security group rules that are overly permissive - but also extends to access logs or encryption that’s disabled and even password literals found in the code.</p>
+<h2 id="cfn-guard">CFN Guard</h2>
+<p>CFN Guard is the real meat on the IaC compliance when it comes to AWS CloudFormation (and even Terraform at a push)</p>
+
+      </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+      
+      
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        871 Words
+      </p>
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        
+          06-20-2022 17:10
+        
+
+         
+          
+        
+      </p>
+    </div>
+
+    
+
+    
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="/bundle.min.a2c5b062c87998f04d1b5dfb6a89a1b2d79786c21d0cb63a05e8a2082984b64b77d80955e3b97eab17273775162ba372511b711fea2f7608f216e68a67bb22d6.js" integrity="sha512-osWwYsh5mPBNG137aomhsteXhsIdDLY6BeiiCCmEtkt32AlV47l&#43;qxcnN3UWK6NyURtxH&#43;ovdgjyFuaKZ7si1g=="></script>
+
+
+    
+        <script src="js/blog.js"></script>
+    
+
+
+    </body>
+</html>
