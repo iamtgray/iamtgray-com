@@ -5,17 +5,82 @@
         <description>Recent content in Posts on Hello, I am Tom Gray</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
+        <managingEditor>Thomas Gray</managingEditor>
         <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-        <lastBuildDate>Mon, 20 Jun 2022 17:10:14 +0100</lastBuildDate>
+        <lastBuildDate>Wed, 22 Apr 2026 16:54:17 +0300</lastBuildDate>
         <atom:link href="https://iamtgray.com/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Cross-Domain Solutions: Explaining What Nobody Would</title>
+            <link>https://iamtgray.com/posts/cross-domain-solutions/</link>
+            <pubDate>Wed, 22 Apr 2026 16:54:17 +0300</pubDate>
+            <author>Thomas Gray</author>
+            <guid>https://iamtgray.com/posts/cross-domain-solutions/</guid>
+            <description>&lt;p&gt;Cross-domain solutions are one of those topics where the gap between &amp;ldquo;people who know&amp;rdquo; and &amp;ldquo;people who need to know&amp;rdquo; is enormous. If you&amp;rsquo;re an architect or engineer who&amp;rsquo;s been told you need a CDS in your design, good luck finding a clear explanation of what that actually means.&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<p>Cross-domain solutions are one of those topics where the gap between &ldquo;people who know&rdquo; and &ldquo;people who need to know&rdquo; is enormous. If you&rsquo;re an architect or engineer who&rsquo;s been told you need a CDS in your design, good luck finding a clear explanation of what that actually means.</p>
+<p>I hit this wall repeatedly. The academic literature is thorough but dense — PhD papers on information flow control, formal verification of guard policies, covert channel analysis. Valuable work, but not what you need when you&rsquo;re trying to understand whether your architecture needs a data diode or a guard, or what a protocol break actually does to your data flow.</p>
+<p>I wanted something that would explain to an architect or engineer: what is a CDS, how does it differ from a firewall, what are the three types (access, transfer, and multi-level), what does a protocol break actually do, what are the twelve-plus treatment types in a CDS pipeline, and how does security enforcement work with labels and access control.</p>
+<p>So I built <a href="https://xdomainsolutions.org">xdomainsolutions.org</a>.</p>
+<p>The site starts from first principles — the definition, the history, why it exists — and builds up to the technical detail. It covers data flow models (unidirectional, bidirectional, multi-level), the mechanics of protocol break, content inspection and transformation, and security label standards like NATO STANAGs 4774 and 4778.</p>
+<p>If you&rsquo;re designing systems that cross security boundaries — whether that&rsquo;s classification levels, organisational boundaries, or regulatory domains — I hope this helps fill the gap that frustrated me for so long, it&rsquo;s definitely not fished yet (at the time of writing) I still want to build out some labs that let you create practical examples in the cloud of things like protocol breaks and the like - but it&rsquo;s a start, and I hope it&rsquo;s useful!</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>Data-Centric Security: Building a Knowledge Resource</title>
+            <link>https://iamtgray.com/posts/data-centric-security/</link>
+            <pubDate>Thu, 26 Feb 2026 22:28:34 +0000</pubDate>
+            <author>Thomas Gray</author>
+            <guid>https://iamtgray.com/posts/data-centric-security/</guid>
+            <description>&lt;p&gt;I&amp;rsquo;ve been working in and around data-centric security for a while now. It&amp;rsquo;s a topic that matters enormously — especially in coalition and multi-national contexts where you need data to flow between organisations at different classification levels, while the security travels &lt;em&gt;with&lt;/em&gt; the data rather than relying on perimeter controls.&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<p>I&rsquo;ve been working in and around data-centric security for a while now. It&rsquo;s a topic that matters enormously — especially in coalition and multi-national contexts where you need data to flow between organisations at different classification levels, while the security travels <em>with</em> the data rather than relying on perimeter controls.</p>
+<p>The problem I kept running into was that the available information fell into two camps. On one side, you have academic papers — brilliant thinking about zero-trust data formats, attribute-based access control, and federated key management — but written without the reality of having to actually implement these things on real infrastructure. On the other side, you have vendors who&rsquo;ve built products that solve a piece of the puzzle, but whose documentation is (understandably) focused on selling you their solution rather than explaining the underlying concepts.</p>
+<p>Nobody could just explain to me what data-centric security <em>is</em>, how the three levels work (labelling, access control, encryption), what NATO STANAGs like ACP-240 actually require, or how you&rsquo;d go about building this on cloud infrastructure.</p>
+<p>So I built <a href="https://datacentricsecurity.org">datacentricsecurity.org</a>.</p>
+<p>The site covers the fundamentals — what DCS is, why it matters, and the three progressive levels of implementation. But it also includes hands-on labs that walk you through building each level on AWS, reference architectures with Terraform, and operational scenarios that describe real coalition data-sharing challenges.</p>
+<p>The goal is to show what <em>is</em> possible using cloud technologies today. You can implement DCS Level 1 (labelling) with S3 object tags and Lambda. Level 2 (access control) works with Amazon Verified Permissions evaluating user attributes against data labels. Level 3 (encryption) uses OpenTDF on ECS with AWS KMS for persistent cryptographic protection that follows the data wherever it goes.</p>
+<p>There are gaps — federated key management across sovereign boundaries is still hard, and STANAG compliance in tactical disconnected environments needs more work. But the site lays out what&rsquo;s achievable now and where the boundaries are.</p>
+<p>If you work in defence, intelligence, or any domain where information sharing across trust boundaries matters, I hope it&rsquo;s useful. The source is open and contributions are welcome.</p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>Giving MSP&#39;s access to your keys? They should be automating..</title>
+            <link>https://iamtgray.com/posts/aws-managed-service-key-control/</link>
+            <pubDate>Tue, 10 Jan 2023 20:11:14 +0100</pubDate>
+            <author>Thomas Gray</author>
+            <guid>https://iamtgray.com/posts/aws-managed-service-key-control/</guid>
+            <description>&lt;p&gt;Recently reading a &lt;a href=&#34;https://www.ncsc.gov.uk/blog-post/using-msps-to-administer-your-cloud-services&#34;&gt;blog post on the NCSC blog&lt;/a&gt; regarding how organisations should choose their managed service proviers (MSP&amp;rsquo;s) I found the guidance (while appropriate) not as in-depth as I would want to be in recipt of if I was a public sector customer looking to choose an MSP that was &amp;lsquo;right for me&amp;rsquo;.&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<p>Recently reading a <a href="https://www.ncsc.gov.uk/blog-post/using-msps-to-administer-your-cloud-services">blog post on the NCSC blog</a> regarding how organisations should choose their managed service proviers (MSP&rsquo;s) I found the guidance (while appropriate) not as in-depth as I would want to be in recipt of if I was a public sector customer looking to choose an MSP that was &lsquo;right for me&rsquo;.</p>
+<p>So let&rsquo;s do a quiz of &lsquo;is this MSP the right MSP for me to go to bed with&rsquo;?</p>
+<h1 id="1-do-they-seperate-their-customers">1. Do they seperate their customers?</h1>
+<p>MSP&rsquo;s are a deeper and more attractive target for attckers because of the nature of their multiplied connections in to end-customers environments.  Therefore the controls and guardrails that they need to have in place as organisations are likely higher than what ever organisation you&rsquo;re operating in.  AWS say that &ldquo;data has gravity&rdquo; that&rsquo;s true in a computational sense as much as it is in security.</p>
+<p>In my experience, many MSP&rsquo;s don&rsquo;t seperate out the controlling powers for their customer environments - for example they might have an operational team, and that team might have a single device that grants access to all customer environments through the use of role federation - while that&rsquo;s not a bad practice in and of itself (it&rsquo;s actually reccomended practice) it opens a security challenge that needs to be thought about.</p>
+<p>Assuming that the MSP has access to control your high level environment, then if the MSP suffers a severe breach that allows an attacker to escalate themselfes into the management account for their organisation, and your accounts sit under that management account, then the attacker can gain control of your accounts.</p>
+<p>Doing so however requires some prequisities, and putting in controls to prevent this is relatively easy:</p>
+<h2 id="11-least-privilige-msp">1.1 Least privilige MSP</h2>
+<p>Does your MSP&rsquo;s environment need priviliges to deploy into your AWS account? If so, can you limit those privileges to only what&rsquo;s needed?  Traditionally using the AWS for example the <code>OrganizationAccountAccessRole</code> has the <code>AdministratorAccess</code> role on your AWS account, consider changing the privileges associated with the role used by the MSP to access your account to limit the privileges</p>
+<h2 id="12-applying-guard-rails">1.2 Applying guard rails</h2>
+<p>Have the MSP apply limits to what services they can use (called service control policies in AWS) to prevent modification of things like root MFA, or account level details without a break-glass requirement.</p>
+<h1 id="2-do-they-operate-at-arms-length">2. Do they operate at arms length?</h1>
+<p>Too often I see MSP&rsquo;s operate highly manual processes and controls - they rely on well-documented run-books and human action over automation as it&rsquo;s cheaper to implement (up-front) and easier for everyone to understand.  You don&rsquo;t need specialists if their role requires only to follow a set of prescribed steps.</p>
+<p>What I like about MSP&rsquo;s who use automation on the other hand, is that not only do they employ specialists - but most likely they have had to think about &rsquo;the corner cases&rsquo; more than the writer of a given run-book.  If they are experienced in running managed services, then they have automation that should cover the vast majority of standard change that they perform (think ITIL standard here)</p>
+<h1 id="3-whats-their-view-on-reviews">3. What&rsquo;s their view on reviews?</h1>
+<p>When I&rsquo;m talking about reviews here, I am thinking about reviews provided by your cloud supplier (think Well-Architected for example) these reviews can be incredibly powerful in ensuring that you&rsquo;ve got the right operational readiness between you and your MSP.</p>
+<p>It&rsquo;s also difficult to hide your practices that are less optimal in an end-to-end review of their service menagement status.</p>
+<h1 id="4-check-their-partner-status">4. Check their partner status</h1>
+<p>If the MSP you&rsquo;re chosing is a partner of a large cloud provider like AWS, then ensure that they have the appropriate certifications from that cloud provider.  In the example of an AWS based MSP, AWS offer the &ldquo;Managed Service Provider&rdquo; competency and &ldquo;Security managed service provider&rdquo; competency - having completed numerous reviews of businesses wanting to achieve or renew their certification in both or either, I can personally speak to the extremely high bar that is required to maintain this certification.</p>
+<p>A simple way to describe it, should be that the AWS Solutions Architect who is working on the review &ldquo;should be impressed&rdquo; by the methodologies, automation and practices of the partner hoping to achieve MSP status.</p>
+]]></content>
+        </item>
         
         <item>
             <title>Bringing security controls into CI/CD with IaC scanning</title>
             <link>https://iamtgray.com/posts/bring-controls-into-ci-cd-with-iac-scanning/</link>
             <pubDate>Mon, 20 Jun 2022 17:10:14 +0100</pubDate>
-            
+            <author>Thomas Gray</author>
             <guid>https://iamtgray.com/posts/bring-controls-into-ci-cd-with-iac-scanning/</guid>
-            <description>In a recent blog post I wrote about the overall controls that can be built into your CI/CD pipelines to increase your security posture.</description>
+            <description>&lt;p&gt;In a &lt;a href=&#34;https://iamtgray.com/posts/secure-ci-cd-pipelines/&#34;&gt;recent blog post&lt;/a&gt; I wrote about the overall controls that can be built into your CI/CD pipelines to increase your security posture.&lt;/p&gt;</description>
             <content type="html"><![CDATA[<p>In a <a href="/posts/secure-ci-cd-pipelines/">recent blog post</a> I wrote about the overall controls that can be built into your CI/CD pipelines to increase your security posture.</p>
 <p>This post aims to dive deeper into the specifics of IaC (Infrastructure as Code) scanning, and explore <em>some</em> of the tools available to you.</p>
 <h1 id="preface">Preface</h1>
@@ -54,7 +119,7 @@ Remediate all users or roles that are created without the correct boundaries on 
 <h2 id="cfn-guard">CFN Guard</h2>
 <p>CFN Guard is the real meat on the IaC compliance when it comes to AWS CloudFormation (and even Terraform at a push)</p>
 <p>It&rsquo;s a tool that has been developed by AWS SA&rsquo;s to take in an given set of rules, and parse a CloudFormation template against the given rules.  It has it&rsquo;s own custom DSL (sigh) but implements basic operands and comparitors that allow you to write a functional rule set.  Take the below CloudFormation and corresponding set of business rules as an example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">AWSTemplateFormatVersion</span>: <span style="color:#e6db74">&#34;2010-09-09&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">Description</span>: <span style="color:#e6db74">&#34;Demo CFN for creating roles/users in this example for a sample DynamoDB Lambda Execution&#34;</span>
 </span></span><span style="display:flex;"><span>
@@ -97,7 +162,7 @@ Remediate all users or roles that are created without the correct boundaries on 
 </span></span><span style="display:flex;"><span>      <span style="color:#f92672">Roles</span>: 
 </span></span><span style="display:flex;"><span>        - !<span style="color:#ae81ff">Ref TestRole</span>
 </span></span></code></pre></div><p>There are (if you&rsquo;ve written any CloudFormation before) a number of key issues with this, while it is valid and will deploy - it has a tightly coupled policy to role (meaning replacement of one requires replacement of the other) as well as a number of * allow conditions across actions and resources.  This kind of CloudFormation is the style we want to stop entering our environments - to do this we can write some basic rules in CFNGuard that stop this bad practice:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">CFN</span> <span style="color:#a6e22e">Guard</span> <span style="color:#a6e22e">Rules</span> <span style="color:#a6e22e">designed</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">assist</span> <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">the</span> <span style="color:#a6e22e">prevention</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">privilege</span> <span style="color:#a6e22e">escalation</span> <span style="color:#a6e22e">attacks</span> <span style="color:#a6e22e">inside</span> <span style="color:#a6e22e">AWS</span>.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">CFN</span> <span style="color:#a6e22e">Guard</span> <span style="color:#a6e22e">Rules</span> <span style="color:#a6e22e">designed</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">assist</span> <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">the</span> <span style="color:#a6e22e">prevention</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">privilege</span> <span style="color:#a6e22e">escalation</span> <span style="color:#a6e22e">attacks</span> <span style="color:#a6e22e">inside</span> <span style="color:#a6e22e">AWS</span>.
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">aws_iam_role_user_resources</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Resources</span>.<span style="color:#f92672">*</span>[
 </span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">Type</span> <span style="color:#66d9ef">in</span> [ <span style="color:#e6db74">/IAM::Role/</span>,
@@ -150,7 +215,7 @@ Remediate all users or roles that are created without the correct boundaries on 
 <h2 id="open-policy-agent">Open Policy Agent</h2>
 <p>OPA (oh-paa) the Open Policy Agent is attempting to decouple the build from runtime policy - this is a really interesting and head scratching policy enforcement agent.</p>
 <p>As a direct quote from their website:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>The Open Policy Agent (OPA, pronounced “oh-pa”) is an open source, 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>The Open Policy Agent (OPA, pronounced “oh-pa”) is an open source, 
 </span></span><span style="display:flex;"><span>general-purpose policy engine that unifies policy enforcement 
 </span></span><span style="display:flex;"><span>across the stack. OPA provides a high-level declarative language
 </span></span><span style="display:flex;"><span>that lets you specify policy as code and simple APIs to offload 
@@ -166,9 +231,9 @@ Remediate all users or roles that are created without the correct boundaries on 
             <title>Securing your CI/CD Pipelines</title>
             <link>https://iamtgray.com/posts/secure-ci-cd-pipelines/</link>
             <pubDate>Mon, 20 Jun 2022 16:10:14 +0100</pubDate>
-            
+            <author>Thomas Gray</author>
             <guid>https://iamtgray.com/posts/secure-ci-cd-pipelines/</guid>
-            <description>When speaking to customers about security, I always try to raise the topic of shifting security left.</description>
+            <description>&lt;p&gt;When speaking to customers about security, I always try to raise the topic of shifting security left.  This relatively moden practice and thinking comes from the dual need to not only (a) de-burden the security team from the low-value tasks of approving individual changes, and (b) allowing the software engineering teams inside the organisation to increase the speed of change, while keeping the security bar high.&lt;/p&gt;</description>
             <content type="html"><![CDATA[<p>When speaking to customers about security, I always try to raise the topic of shifting security left.  This relatively moden practice and thinking comes from the dual need to not only (a) de-burden the security team from the low-value tasks of approving individual changes, and (b) allowing the software engineering teams inside the organisation to increase the speed of change, while keeping the security bar high.</p>
 <p>It takes a real shift in mindset for most organisations (and the security teams within them) to start moving security left.  Often customers ask what exactly is meant by &ldquo;shifting left&rdquo; in this context.  To help make the phrase &ldquo;shift left&rdquo; real in a customers mind, I commonly point them to their CI/CD pipeline.</p>
 <p>Take the below example of a common CI/CD pipeline pattern:</p>
@@ -237,9 +302,10 @@ Remediate all users or roles that are created without the correct boundaries on 
             <title>Sa Associate Notes</title>
             <link>https://iamtgray.com/posts/sa-associate-notes/</link>
             <pubDate>Thu, 28 May 2020 09:41:18 +0100</pubDate>
-            
+            <author>Thomas Gray</author>
             <guid>https://iamtgray.com/posts/sa-associate-notes/</guid>
-            <description>Update as of March 2022 - I have now achieved AWS SA Associate, AWS SA Professional and AWS Security Speciality certifications.</description>
+            <description>&lt;p&gt;Update as of March 2022 - I have now achieved AWS SA Associate, AWS SA Professional and AWS Security Speciality certifications.
+My experience has so far been that all three associate qualifications combined effectively produce one SA Pro, and the move from SA pro into the specialty certifications is not large, and geenrally involves going only a little deeper.&lt;/p&gt;</description>
             <content type="html"><![CDATA[<p>Update as of March 2022 - I have now achieved AWS SA Associate, AWS SA Professional and AWS Security Speciality certifications.
 My experience has so far been that all three associate qualifications combined effectively produce one SA Pro, and the move from SA pro into the specialty certifications is not large, and geenrally involves going only a little deeper.</p>
 <p>The exam with the highest bar (so far) has been the AWS DevOps Pro certification.</p>
@@ -283,9 +349,9 @@ My experience has so far been that all three associate qualifications combined e
             <title>Job Move</title>
             <link>https://iamtgray.com/posts/job-move/</link>
             <pubDate>Thu, 28 May 2020 08:54:14 +0100</pubDate>
-            
+            <author>Thomas Gray</author>
             <guid>https://iamtgray.com/posts/job-move/</guid>
-            <description>Having spent 4 months deciding that I wanted to leave, and a further 4 months applying for a job with AWS, Friday the 5th of June marks my last day as a principal consultant at InfinityWorks, the end of a four year journey in which I have learned more than I thought possible.</description>
+            <description>&lt;p&gt;Having spent 4 months deciding that I wanted to leave, and a further 4 months applying for a job with AWS, Friday the 5th of June marks my last day as a principal consultant at InfinityWorks, the end of a four year journey in which I have learned more than I thought possible.&lt;/p&gt;</description>
             <content type="html"><![CDATA[<p>Having spent 4 months deciding that I wanted to leave, and a further 4 months applying for a job with AWS, Friday the 5th of June marks my last day as a principal consultant at InfinityWorks, the end of a four year journey in which I have learned more than I thought possible.</p>
 <p>Below is the email I sent to my colleagues in the last few days at InfinityWorks.</p>
 <hr>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="Thomas Gray">
+<meta name="description" content="I&rsquo;ve been working in and around data-centric security for a while now. It&rsquo;s a topic that matters enormously — especially in coalition and multi-national contexts where you need data to flow between organisations at different classification levels, while the security travels with the data rather than relying on perimeter controls.
+" />
+<meta name="keywords" content="homepage, blog" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://iamtgray.com/posts/data-centric-security/" />
+
+
+    <title>
+        
+            Data-Centric Security: Building a Knowledge Resource :: Hello, I am Tom Gray 
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+
+  
+  <link rel="stylesheet" href="/main.4e5c639214707eff609bb55fe49e183dee42258a73bc90e4cc7b0a84f900798a.css">
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="css/blog.css">
+    
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="Data-Centric Security: Building a Knowledge Resource">
+  <meta itemprop="description" content="I’ve been working in and around data-centric security for a while now. It’s a topic that matters enormously — especially in coalition and multi-national contexts where you need data to flow between organisations at different classification levels, while the security travels with the data rather than relying on perimeter controls.">
+  <meta itemprop="datePublished" content="2026-02-26T22:28:34+00:00">
+  <meta itemprop="dateModified" content="2026-02-26T22:28:34+00:00">
+  <meta itemprop="wordCount" content="348">
+  <meta itemprop="image" content="https://iamtgray.com/">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://iamtgray.com/">
+  <meta name="twitter:title" content="Data-Centric Security: Building a Knowledge Resource">
+  <meta name="twitter:description" content="I’ve been working in and around data-centric security for a while now. It’s a topic that matters enormously — especially in coalition and multi-national contexts where you need data to flow between organisations at different classification levels, while the security travels with the data rather than relying on perimeter controls.">
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2026-02-26 22:28:34 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">iamtgray</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/posts/">Posts</a></li><li><a href="/projects/">Projects</a></li><li><a href="/about/">About</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        2 minutes
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title">
+        <a href="https://iamtgray.com/posts/data-centric-security/">Data-Centric Security: Building a Knowledge Resource</a>
+      </h1>
+
+      
+
+      
+
+      
+
+      <div class="post-content">
+        <p>I&rsquo;ve been working in and around data-centric security for a while now. It&rsquo;s a topic that matters enormously — especially in coalition and multi-national contexts where you need data to flow between organisations at different classification levels, while the security travels <em>with</em> the data rather than relying on perimeter controls.</p>
+<p>The problem I kept running into was that the available information fell into two camps. On one side, you have academic papers — brilliant thinking about zero-trust data formats, attribute-based access control, and federated key management — but written without the reality of having to actually implement these things on real infrastructure. On the other side, you have vendors who&rsquo;ve built products that solve a piece of the puzzle, but whose documentation is (understandably) focused on selling you their solution rather than explaining the underlying concepts.</p>
+<p>Nobody could just explain to me what data-centric security <em>is</em>, how the three levels work (labelling, access control, encryption), what NATO STANAGs like ACP-240 actually require, or how you&rsquo;d go about building this on cloud infrastructure.</p>
+<p>So I built <a href="https://datacentricsecurity.org">datacentricsecurity.org</a>.</p>
+<p>The site covers the fundamentals — what DCS is, why it matters, and the three progressive levels of implementation. But it also includes hands-on labs that walk you through building each level on AWS, reference architectures with Terraform, and operational scenarios that describe real coalition data-sharing challenges.</p>
+<p>The goal is to show what <em>is</em> possible using cloud technologies today. You can implement DCS Level 1 (labelling) with S3 object tags and Lambda. Level 2 (access control) works with Amazon Verified Permissions evaluating user attributes against data labels. Level 3 (encryption) uses OpenTDF on ECS with AWS KMS for persistent cryptographic protection that follows the data wherever it goes.</p>
+<p>There are gaps — federated key management across sovereign boundaries is still hard, and STANAG compliance in tactical disconnected environments needs more work. But the site lays out what&rsquo;s achievable now and where the boundaries are.</p>
+<p>If you work in defence, intelligence, or any domain where information sharing across trust boundaries matters, I hope it&rsquo;s useful. The source is open and contributions are welcome.</p>
+
+      </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+      
+      
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        348 Words
+      </p>
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        
+          02-26-2026 22:28
+        
+
+         
+          
+        
+      </p>
+    </div>
+
+    
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="/bundle.min.17f4a297973019cb34411034a36394fcb6eacdd75534644a62f64d85ac204bca0405d8a5b5f4babfd7625a6307b48c86d042051a47e0506e4147dda733ef13aa.js" integrity="sha512-F/Sil5cwGcs0QRA0o2OU/LbqzddVNGRKYvZNhawgS8oEBdiltfS6v9diWmMHtIyG0EIFGkfgUG5BR92nM&#43;8Tqg=="></script>
+
+
+    
+        <script src="js/blog.js"></script>
+    
+
+
+    </body>
+</html>

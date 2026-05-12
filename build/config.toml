@@ -1,6 +1,6 @@
 baseURL = "https://iamtgray.com/"
 title = "iamtgray"
-languageCode = "en"
+defaultContentLanguageInSubdir = false
 enableInlineShortcodes = true
 
 theme = "hello-friend-ng"
@@ -70,6 +70,12 @@ customJs = ["js/blog.js"]
   url = "/posts/"
 
   [[menu.main]]
+  name = "Projects"
+  identifier = "projects"
+  weight = 200
+  url = "/projects/"
+
+  [[menu.main]]
   name = "About"
   identifier = "about"
   weight = 300
@@ -95,6 +101,7 @@ customJs = ["js/blog.js"]
 
 [languages]
   [languages.en]
+    locale = "en"
     title = "Hello, I am Tom Gray"
     subtitle = "An engineer, consultant and architect"
     keywords = ""
