@@ -1,0 +1,10 @@
+services:
+  hugo:
+    build: .
+    ports:
+      - "1313:1313"
+    volumes:
+      # Live mount so edits to content/, layouts/, static/ reload instantly.
+      - .:/src
+    # Uses the image's default CMD: `hugo server` with live reload + drafts.
+    # Preview at http://localhost:1313
