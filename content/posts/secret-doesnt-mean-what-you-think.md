@@ -1,0 +1,29 @@
+---
+title: "How a Secret Actually Crosses a Border"
+date: 2026-08-23T09:00:00+00:00
+draft: false
+---
+
+As I've worked with a number of customers, I've met a lot of people who treat a classification in-country as kind of currency.. a "SECRET" is "SECRET" after all.. But we know (and I spoke about in the intro post of this series) that when it was marked as SECRET then it was a word chosen that combined multiple decisions and thoughts together..
+
+This gets really interesting when I've been digging into coalition data sharing across NATO member nations (using NATO UNCLASSIFIED documents that I can access on the internet) to understand how nations work together..
+
+Start with the fact that the words genuinely don't line up across borders. Nations don't run the same number of levels, let alone the same names. In 2021 France dropped to two different national levels: Secret and Très Secret (Très Secret being one of my colleagues most favorite classification names). The UK and the US both run three, but not the _same_ three: the UK dropped both RESTRICTED and CONFIDENTIAL, the US kept a national CONFIDENTIAL and dropped only RESTRICTED. Greece keeps a fifth tier that sits _above_ the top. So the count alone runs from two to five before you've got out of bed.
+
+And the words are false friends more often than I expected - Spain has a marking called RESERVADO, which every English (or French) instinct reads as "restricted", the bottom of the pile. It maps to NATO SECRET, near the top. Romania has one called _strict secret_, which reads for all the world like "top secret", and it maps to NATO SECRET, a rung _below_ Romania's actual top tier!
+
+Thankfully (because NATO are not in fact, idiots) they've solved this problem in the alliance some time ago.. When NATO needs information to move between members, it doesn't translate SECRET as "the foreign word that looks most like SECRET" (shocking.. I know). It maintains an explicit equivalence table (the crosswalk, AC/35-D/1002) that says, in effect, this nation's marking X is protected the way our level Y is protected. RESERVADO connects to NATO SECRET because the table says those two are handled equivalently, not because the words agree. The meaning lives in the mapping, and the printed word is closer to a label on the outside of a box than a description of what's inside.
+
+Sharing tends to happen one of two ways that I can figure: Through an alliance like NATO, everyone has agreed the crosswalk up front, so there's a shared view of where each nation's markings sit and, with it, a shared view of the risk. Or: it happens country to country, bilaterally, and then the two sides work it out before anything actually moves: the receiving country has to satisfy the sender that it will protect the material to an equivalent standard first. 
+
+You can see the shape of this in NATO's own operational templates. The standard security clause for a memorandum of understanding (it's in AJP-4.3, if you like reading that sort of thing) says the classification is retained or equivalently protected on transfer, that the marking carries not just the level but its origin and the conditions of its release, that disclosure stays under the originator's control, and _that the protection persists after the agreement itself has ended_. The obligation to protect thing thing outlives the paperwork..
+
+The mechanism for the release is a caveat. The US, Australia, New Zealand and NATO (perhaps among others?) all use a "REL TO" marking (releasable to) that names the specific nations allowed to see the thing. So a document isn't just SECRET, it's SECRET releasable to a named list, and the list is doing at least as much work as the level.
+
+Underneath all of it sits a principle called originator control, or the third-party rule: the country that created the information keeps a say in where it goes next, and you don't get to pass on someone else's secret without asking them. It shows up in various forms. Belgium can't declassify partner-service material without the originating service's say-so, Iceland needs the originator's consent even to move classified material abroad. On paper, the originator never quite lets go of the content they produced.
+
+I've heard it said (more than once) that in practice a nation treats information as effectively _gone_ the moment it shares it. Whatever originator control says on paper, once the file is physically sitting inside another sovereign's systems you are trusting their people and their controls rather than enforcing your own, and mature sharers plan on that basis regardless of the marking they stamped on top. I find that entirely believable, and it squares with how I think I'd behave, but I haven't found it written down in an instrument I can point you to, so treat it as a practitioner's attitude perhaps.  Concepts like Data Centric Securirty (DCS) "Level 3" theoretically fix this I guess (to an extent).. When Federated Cryptographic Key Management (FCKM) get's agreed and rattified, there'll be a standard way of nations sharing their files while retaining an aspect of agreed cryptographic control..
+
+Without the dream of DCS-3 and FCKM, the marking is close to the _least important_ artefact in the whole exchange. What governs the secret is the mapping that tells you what the marking is worth, and the arrangement that says who may hold it and under what promise.
+
+That's an interesting problem though, one I've documented on [datacentricsecurity.org](https://datacentricsecurity.org/) and have even had the lovely folks on the Data Centric Security committee come to me and complain that there was information on there that wasn't accurate (don't worry, I've fixed it!). Exciting times over here.
